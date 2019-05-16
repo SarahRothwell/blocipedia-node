@@ -1,5 +1,5 @@
 module.exports = {
   index(req, res, next){
-    res.render("static/index", {title: "Blocipedia"});
+    res.render("static/index", {title: "Welcome toBlocipedia"});
   }
 }
