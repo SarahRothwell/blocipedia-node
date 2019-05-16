@@ -11,7 +11,7 @@
 
 <!-- #3 -->
       <% messages.error.forEach((err) => { %>
-        <li><%= `${err.param} ${err.msg}` %></li>
+        <li><%= `${err.name} ${err.parent.routine}` %></li>
       <% }) %>
     </ul>
   </div>
