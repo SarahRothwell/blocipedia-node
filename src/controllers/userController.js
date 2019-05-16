@@ -18,7 +18,6 @@ module.exports = {
 
     userQueries.createUser(newUser, (err, user) => {
       if(err){
-        console.log(err);
         req.flash("error", err);
         res.redirect("/users/signup");
       } else {
@@ -39,6 +38,35 @@ module.exports = {
         })
       }
     });
-  }
+  },
+
+  signInForm(req, res, next){
+    res.render("users/sign_in");s
+  },
+
+  signIn(req, res, next){
+    passport.authenticate("local", function(err, user, info){
+      if(err){
+        return next(err);
+      }
+      if(!req.user) {
+        req.flash("notice", "Sign in failed. Please try again.");
+        return res.redirect('/users/sign_in');
+        }
+        req.logIn(user, function(err) {
+          if(err) {
+            return next(err);
+          }
+          req.flash("notice", "You've successfully signed in!");
+          return res.redirect('/');
+        });
+      })(req, res, next);
+    },
+
+signOut(req, res, next){
+  req.logout();
+  req.flash("notice", "You've successfully signed out!");
+  res.redirect("/");
+}
 
 }
