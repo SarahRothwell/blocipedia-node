@@ -9,10 +9,16 @@
 
     <main class="container">
 
-    <h1><%= wiki.title %></h1>
-    <p><%= wiki.body %></p>
+      <h1><%= wiki.title %></h1>
 
-    <a href = "wikis/<%= wiki.id %>/wikis/edit" class="btn bth-success">Edit Wiki</a>
+      <% if(currentUser) { %>
+      <a href = "/wikis/<%= wiki.id %>/edit" class="btn bth-success">Edit Wiki</a>
+      <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+      <% } %>
+
+      <p><%= wiki.body %></p>
 
     </main>
 

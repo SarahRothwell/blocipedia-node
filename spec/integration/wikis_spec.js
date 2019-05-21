@@ -15,7 +15,7 @@ describe("routes : wikis", () => {
       User.create({
         username: "Mary",
         email: "Mary@email.com",
-        password: "123983048",
+        password: "123983048"
       })
       .then((user) => {
         this.user = user;
@@ -23,7 +23,6 @@ describe("routes : wikis", () => {
         Wiki.create({
           title: "Wiki title",
           body: "Wiki description",
-          private: true,
           userId: this.user.id
         })
         .then((wiki) => {
@@ -34,7 +33,7 @@ describe("routes : wikis", () => {
     });
   });
 
-  describe("GET /index", () => {
+  describe("GET /wikis", () => {
 
     it("should return a status code of 200 and all wikis", (done) => {
       request.get(base, (err, res, body) => {
@@ -64,7 +63,7 @@ describe("routes : wikis", () => {
       form: {
         title: "history of america",
         description: "description of the history of america",
-        private: false
+        userId: this.user.id
       }
     };
 
@@ -75,7 +74,6 @@ describe("routes : wikis", () => {
           expect(res.statusCode).toBe(303);
           expect(wiki.title).toBe("history of america");
           expect(wiki.body).toBe("description of the history of america");
-          expect(wiki.private).toBe(false);
           done();
         })
         .catch((err) => {
@@ -91,7 +89,7 @@ describe("routes : wikis", () => {
     it("should render a view of the wiki that the user selects", (done) => {
       request.get(`${base}${this.wiki.id}`, (err, res, body) => {
         expect(err).toBeNull();
-        expect(body).toContain("description of the history of america");
+        expect(wiki.body).toContain("description of the history of america");
         done();
       });
     });
@@ -100,14 +98,14 @@ describe("routes : wikis", () => {
   describe("POST /wikis/:id/destroy", () => {
 
     it ("should delete a wiki with the associated id", (done) =>{
-      Wiki.all()
+      Wiki.findAll()
       .then((wikis) => {
 
         const wikiCountBeforeDelete = wikis.length;
         expect(wikiCountBeforeDelete).toBe(1);
 
-        request.post(`${base}${this.wiki.id}`, (err,res, body) => {
-          Wiki.all()
+        request.post(`${base}${this.wiki.id}/destory`, (err,res, body) => {
+          Wiki.findAll()
           .then((wikis) => {
             expect(err).toBeNull();
             expect(wikis.length).toBe(wikiCountBeforeDelete - 1);
@@ -138,14 +136,13 @@ describe("routes : wikis", () => {
         form: {
           title: "history of canada",
           description: "description of the history of america",
-          private: false
         }
       };
 
       request.post(options, (err, res, body) => {
         expect(err).toBeNull();
 
-        Wiki.fineOne({
+        Wiki.findOne({
           where: {id: this.wiki.id}
         })
         .then((wiki) => {

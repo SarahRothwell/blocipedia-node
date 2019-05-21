@@ -20,7 +20,6 @@ describe("Wiki", () => {
         Wiki.create({
           title: "rabbits in the park",
           body: "description of rabbits in the park",
-          private: true,
           userId: this.user.id
         })
         .then((wiki) => {
@@ -39,13 +38,11 @@ describe("#create()", () => {
     Wiki.create({
       title: "monkeys in the trees",
       body: "description of monkeys in tress",
-      private: true,
       userId: this.user.id
     })
     .then((wiki) => {
       expect(wiki.title).toBe("monkeys in the trees");
       expect(wiki.body).toBe("description of monkeys in tress");
-      expect(wiki.private).toBe(true);
       done();
     })
     .catch((err) => {
@@ -67,7 +64,6 @@ describe("#create()", () => {
       expect(err.message).toContain("Wiki.title cannot be null");
       expect(err.message).toContain("Wiki.body cannot be null");
       expect(err.message).toContain("Wiki.userId cannot be null");
-      expect(err.message).toContain("Wiki.private cannot be null");
       done();
     });
   });

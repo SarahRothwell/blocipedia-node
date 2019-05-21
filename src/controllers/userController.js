@@ -46,6 +46,7 @@ module.exports = {
 
   signIn(req, res, next){
     passport.authenticate("local", function(err, user, info){
+      console.log(err);
       if(err){
         return next(err);
       }
@@ -58,7 +59,7 @@ module.exports = {
             return next(err);
           }
           req.flash("notice", "You've successfully signed in!");
-          return res.redirect('/wikis/index');
+          return res.redirect('/');
         });
       })(req, res, next);
     },
