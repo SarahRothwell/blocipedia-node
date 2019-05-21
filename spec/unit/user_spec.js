@@ -35,7 +35,7 @@ describe("#create()", () => {
 
   it("should not create a user with an invalid email", (done) => {
     User.create({
-      username: "sarah",
+      username: "marcus",
       email: "This-isn't-an email_address",
       password: "1234567890"
     })
@@ -50,7 +50,7 @@ describe("#create()", () => {
 
   it("should not create an email address that is already taken", (done) => {
     User.create({
-      username: "sarah",
+      username: "Jamie",
       email: "user@example.com",
       password: "1234567890"
     })
