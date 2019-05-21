@@ -1,4 +1,7 @@
+const express = require("express");
+const router = express.Router();
 const userQueries = require("../db/queries.users.js");
+const wikiQueries = require("../db/queries.wikis.js");
 const passport = require("passport");
 const sgMail = require('@sendgrid/mail');
 
@@ -23,7 +26,7 @@ module.exports = {
       } else {
           sgMail.setApiKey(process.env.SENDGRID_API_KEY);
           const msg = {
-            to: req.body.email,
+            to: newUser.email,
             from: 'sarahhrothwell@gmail.com',
             subject: 'Blocipiedia Account Activated',
             text: 'Thank you for joining Blocipiedia!',
@@ -32,10 +35,11 @@ module.exports = {
           sgMail.send(msg);
 
 
-        passport.authenticate("local")(req, res, () => {
+       passport.authenticate("local")(req, res, () => {
           req.flash("notice", "You've successfully signed in!");
           res.redirect("/");
         })
+
       }
     });
   },
@@ -45,6 +49,18 @@ module.exports = {
   },
 
   signIn(req, res, next){
+  passport.authenticate("local")(req, res, function () {
+    if(!req.user){
+      req.flash("notice", "Sign in failed. Please try again.")
+      res.redirect("/users/sign_in");
+    } else {
+      req.flash("notice", "You've successfully signed in!");
+      res.redirect("/");
+    }
+  })
+},
+
+  /*signIn(req, res, next){
     passport.authenticate("local", function(err, user, info){
       console.log(err);
       if(err){
@@ -63,7 +79,7 @@ module.exports = {
         });
       })(req, res, next);
     },
-
+*/
 signOut(req, res, next){
   req.logout();
   req.flash("notice", "You've successfully signed out!");

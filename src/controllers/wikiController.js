@@ -1,4 +1,7 @@
+const express = require("express");
+const router = express.Router();
 const wikiQueries = require("../db/queries.wikis.js");
+const userQueries = require("../db/queries.users.js");
 
  module.exports = {
 
