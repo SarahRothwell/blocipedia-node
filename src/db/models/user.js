@@ -15,10 +15,14 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false
-    } 
+    }
   }, {});
   User.associate = function(models) {
-    // associations can be defined here
+
+    User.hasMany(models.Wiki, {
+      foreign: "userId",
+      as: "wikis"
+    });
   };
   return User;
 };

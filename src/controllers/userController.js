@@ -41,7 +41,7 @@ module.exports = {
   },
 
   signInForm(req, res, next){
-    res.render("users/sign_in");s
+    res.render("users/sign_in");
   },
 
   signIn(req, res, next){
@@ -58,7 +58,7 @@ module.exports = {
             return next(err);
           }
           req.flash("notice", "You've successfully signed in!");
-          return res.redirect('/');
+          return res.redirect('/wikis/index');
         });
       })(req, res, next);
     },

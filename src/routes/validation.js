@@ -18,5 +18,24 @@ module.exports = {
     } else {
       return next();
     }
+  },
+
+  validateWikis(req, res, next) {
+
+  if(req.method === "POST") {
+    req.checkBody("title", "cannot be empty").isLength({min: 1});
+    req.checkBody("body", "cannot be empty").isLength({min: 1});
   }
+
+  const errors = req.validationErrors();
+
+  if (errors) {
+    console.log(errors);
+    req.flash("error", errors);
+    return res.redirect(303, req.headers.referer)
+  } else {
+    return next();
+    }
+  }
+
 }
