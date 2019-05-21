@@ -18,6 +18,7 @@ describe("routes : wikis", () => {
         password: "123983048"
       })
       .then((user) => {
+        //console.log(user);
         this.user = user;
 
         Wiki.create({
@@ -26,6 +27,7 @@ describe("routes : wikis", () => {
           userId: this.user.id
         })
         .then((wiki) => {
+          //console.log(wiki);
           this.wiki = wiki;
           done();
         });

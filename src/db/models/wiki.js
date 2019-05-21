@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     private:{
       type: DataTypes.BOOLEAN,
-      defaultValue: false
+      defaultValue: false,
+      allowNull:false
     },
     userId: {
       type: DataTypes.INTEGER,
