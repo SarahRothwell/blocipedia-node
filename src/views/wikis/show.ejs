@@ -12,7 +12,7 @@
       <h1><%= wiki.title %></h1>
 
       <% if(currentUser) { %>
-      <a href = "/wikis/<%= wiki.id %>/edit" class="btn bth-success">Edit Wiki</a>
+      <a href = "<%= wiki.id %>/edit" class="btn bth-success">Edit Wiki</a>
       <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
         <button type="submit" class="btn btn-danger">Delete</button>
       </form>

@@ -10,13 +10,13 @@ const userQueries = require("../db/queries.users.js");
         if(err){
           res.redirect(500, "static/index");
         } else {
-          res.render("/wikis", {wikis});
+          res.render("wikis", {wikis});
         }
       });
    },
 
    new(req,res,next){
-     res.render("/wikis/new");
+     res.render("wikis/new");
    },
 
    create(req, res, next){
@@ -28,7 +28,7 @@ const userQueries = require("../db/queries.users.js");
      };
      wikiQueries.addWiki(newWiki, (err, wiki) => {
        if(err){
-         res.redirect(500, "/wikis/new");
+         res.redirect(500, "wikis/new");
        } else {
          res.redirect(303, `/wikis/${wiki.id}`);
        }
@@ -49,6 +49,9 @@ const userQueries = require("../db/queries.users.js");
 
    destroy(req, res, next){
      wikiQueries.deleteWiki(req, (err, wiki) => {
+       console.log(err);
+       console.log(req);
+       console.log(wiki);
        if(err){
          res.redirect(500, `/wikis/${req.params.id}`)
        } else {
@@ -62,17 +65,18 @@ const userQueries = require("../db/queries.users.js");
        if(err || wiki == null){
          res.redirect(404, "/");
        } else {
-         res.render("/wikis/edit", {wiki});
+         res.render("wikis/edit", {wiki});
        }
      });
    },
 
    update(req, res, next){
      wikiQueries.updateWiki(req, req.body, (err, wiki) => {
+       console.log(req);
        if(err || wiki == null){
-         res.redirect(404, `/wikis/${req.params.id}/edit`);
+         res.redirect(404, `wikis/${req.params.id}/edit`);
        } else {
-         res.redirect(`/wikis/${req.params.id}`);
+         res.redirect(`wikis/${req.params.id}`);
        }
      });
    }
