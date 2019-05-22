@@ -48,19 +48,21 @@ module.exports = {
   },
 
   updateWiki(req, updatedWiki, callback){
+
      return Wiki.findById(req.params.id)
      .then((wiki) => {
        if(!wiki){
          return callback("Wiki not found");
        }
-
-       Wiki.update(updatedWiki, {
+       wiki.update(updatedWiki, {
          fields: Object.keys(updatedWiki)
        })
        .then(() => {
+         //console.log(wiki);
          callback(null, wiki);
        })
        .catch((err) => {
+         //console.log(err);
          callback(err);
        });
      });

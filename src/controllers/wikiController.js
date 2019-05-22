@@ -72,11 +72,10 @@ const userQueries = require("../db/queries.users.js");
 
    update(req, res, next){
      wikiQueries.updateWiki(req, req.body, (err, wiki) => {
-       console.log(req);
        if(err || wiki == null){
          res.redirect(404, `wikis/${req.params.id}/edit`);
        } else {
-         res.redirect(`wikis/${req.params.id}`);
+         res.redirect(303, "/wikis");
        }
      });
    }
