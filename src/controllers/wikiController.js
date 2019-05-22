@@ -10,20 +10,20 @@ const userQueries = require("../db/queries.users.js");
         if(err){
           res.redirect(500, "static/index");
         } else {
-          res.render("wikis/index", {wikis});
+          res.render("/wikis", {wikis});
         }
-      })
+      });
    },
 
    new(req,res,next){
-     res.render("wikis/new");
+     res.render("/wikis/new");
    },
 
    create(req, res, next){
      let newWiki = {
        title: req.body.title,
        body: req.body.body,
-      // private: req.body.private,
+       private: false,
        userId: req.user.id
      };
      wikiQueries.addWiki(newWiki, (err, wiki) => {
@@ -62,7 +62,7 @@ const userQueries = require("../db/queries.users.js");
        if(err || wiki == null){
          res.redirect(404, "/");
        } else {
-         res.render("wikis/edit", {wiki});
+         res.render("/wikis/edit", {wiki});
        }
      });
    },

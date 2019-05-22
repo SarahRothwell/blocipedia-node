@@ -24,11 +24,16 @@ describe("routes : wikis", () => {
         Wiki.create({
           title: "Wiki title",
           body: "Wiki description",
+          private: false,
           userId: this.user.id
         })
         .then((wiki) => {
           //console.log(wiki);
           this.wiki = wiki;
+          done();
+        })
+        .catch((err) => {
+          console.log(err);
           done();
         });
       });
@@ -65,7 +70,8 @@ describe("routes : wikis", () => {
       form: {
         title: "history of america",
         description: "description of the history of america",
-        userId: this.user.id
+        userId: this.user.id,
+        private: false
       }
     };
 
@@ -76,6 +82,7 @@ describe("routes : wikis", () => {
           expect(res.statusCode).toBe(303);
           expect(wiki.title).toBe("history of america");
           expect(wiki.body).toBe("description of the history of america");
+          expect(wiki.userId).not.toBeNull();
           done();
         })
         .catch((err) => {
