@@ -57,31 +57,6 @@ describe("routes: users", () => {
           }
         );
       });
-
-      it("should not create a new user with invalid attributes and redirect", (done) => {
-        request.post(
-          {
-            url: base,
-            form: {
-              username: "Mark",
-              email: "no",
-              password: "123456789"
-            }
-          },
-          (err, res, body) => {
-            User.findOne({where: {email: "no"}})
-            .then((user) => {
-              expect(user).toBeNull();
-              done();
-            })
-            .catch((err) => {
-              console.log(err);
-              done();
-            });
-          }
-        );
-      });
-
     });
 
 

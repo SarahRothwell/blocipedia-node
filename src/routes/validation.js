@@ -3,7 +3,7 @@ module.exports = {
   validateUsers(req, res, next) {
 
     if(req.method === "POST") {
-      req.checkBody("username", "must be at least 3 characters in length").isLength({min: 3});
+      //req.checkBody("username", "must be at least 3 characters in length").isLength({min: 3});
       req.checkBody("email", "must be valid").isEmail();
       req.checkBody("password", "must be at least 6 characters in length").isLength({min: 6})
       req.checkBody("passwordConfirmation", "must match password provided").optional().matches(req.body.password);
@@ -18,8 +18,8 @@ module.exports = {
     } else {
       return next();
     }
-  },
-//new
+  }
+/*
   validateSignIn(req, res, next) {
 
     if(req.method === "POST") {
@@ -37,7 +37,7 @@ module.exports = {
       return next();
     }
   }
-/*
+
   validateWikis(req, res, next) {
 
   if(req.method === "POST") {

@@ -6,7 +6,8 @@ const passport = require("passport");
 const sgMail = require('@sendgrid/mail');
 
 module.exports = {
-  signUp(req, res, next){
+
+signUp(req, res, next){
     res.render("users/signup");
   },
 
@@ -26,7 +27,7 @@ module.exports = {
       } else {
           sgMail.setApiKey(process.env.SENDGRID_API_KEY);
           const msg = {
-            to: newUser.email,
+            to: 'test@example.com',
             from: 'sarahhrothwell@gmail.com',
             subject: 'Blocipiedia Account Activated',
             text: 'Thank you for joining Blocipiedia!',
@@ -41,6 +42,9 @@ module.exports = {
         })
 
       }
+    })
+    .catch((err) => {
+      console.log(err)
     });
   },
 
