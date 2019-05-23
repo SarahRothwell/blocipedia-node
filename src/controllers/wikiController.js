@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const wikiQueries = require("../db/queries.wikis.js");
 const userQueries = require("../db/queries.users.js");
+const Authorizer = require("../policies/wiki");
 
  module.exports = {
 
@@ -49,9 +50,6 @@ const userQueries = require("../db/queries.users.js");
 
    destroy(req, res, next){
      wikiQueries.deleteWiki(req, (err, wiki) => {
-       console.log(err);
-       console.log(req);
-       console.log(wiki);
        if(err){
          res.redirect(500, `/wikis/${req.params.id}`)
        } else {
