@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+  </head>
+  <body>
+
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+
+      <h1>Downgrade Account</h1>
+
+      <p>Press the button below to downgrade from your premium account</p>
+
+      <div id="shop">
+        <button id="buttonDowngrade">Downgrade Account</button>
+      </div>
+
+
+    </main>
+
+    <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+  <script>
+
+  const button = document.getElementById("buttonDowngrade");
+  console.log(button);
+    button.addEventListener("click", function(ev) {
+      console.log('downgrade button was clicked');
+      fetch('/users/downgradeUser', {
+        method:"POST",
+      //  headers: {"Content-Type": "application/json"},
+      //  body: JSON.stringify(token)
+      })
+      .then(function(response){
+        if(response.ok){
+          console.log('downgradeUser click was recorded');
+          res.redirect('/')
+        }
+        throw new Error ('click downgradeUser request failed.');
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+    });
+
+  </script>
+
+</html>

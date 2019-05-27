@@ -19,6 +19,36 @@ module.exports = {
     .catch((err) => {
       callback(err);
     })
+  },
+
+  getUser(id, callback){
+    return User.findById(id)
+    .then((user) => {
+      callback(null, user);
+    })
+    .catch((err) => {
+      callback(err);
+    })
+  },
+
+  upgradeUser(id, callback){
+    return User.findById(id)
+    .then((user) => {
+      console.log(user);
+      if(!user){
+        return callback("user not found");
+      }
+      user.update(
+        {role: 2},
+        {where: {id: id}}
+      )
+      .then(() => {
+        callback(err);
+      })
+      .catch((err) => {
+        callback(err);
+      });
+    });
   }
 
 }

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+  </head>
+  <body>
+
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+
+      <h1>Upgrade to Premium</h1>
+
+      <p>Upgrade your account to create private wikis!</p>
+
+      <div id="shop">
+        <button id="buttonCheckout">Purchase Premium Account</button>
+      </div>
+
+
+    </main>
+
+    <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+  <script>
+
+  const checkoutHandler = StripeCheckout.configure({
+    key: "pk_test_5SYnnUv28Z7wx2JKfh9AcopX00MhSog9XK",
+    locale: "auto"
+  });
+
+  const button = document.getElementById("buttonCheckout");
+    button.addEventListener("click", function(ev) {
+      checkoutHandler.open({
+        name: "Upgrade",
+        description: "Premium Account",
+        token: handleToken,
+        amount: 1500,
+        currency: "usd"
+      });
+    });
+
+  function handleToken(token) {
+    fetch("/users/upgradeCharge", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(token)
+    })
+    .then(output => {
+      console.log(output.status);
+      if (output.status === "succeeded")
+        document.getElementById("shop").innerHTML = "<p>Purchase complete!</p>";
+
+        fetch('upgradeUser', {
+          method:"POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify(token)
+        })
+        .then(function(response) {
+
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+    })
+  }
+
+
+  </script>
+
+</html>

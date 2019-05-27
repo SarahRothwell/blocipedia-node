@@ -12,7 +12,13 @@ module.exports = (sequelize, DataTypes) => {
     private:{
       type: DataTypes.BOOLEAN,
       defaultValue: false,
-      allowNull:false
+      allowNull:false,
+  /*    set: function(value) {
+        if (value === 'true') value = true;
+        if (value === 'false') value = false;
+        this.setDataValue('private', value);
+      }
+      */
     },
     userId: {
       type: DataTypes.INTEGER,

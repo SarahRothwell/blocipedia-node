@@ -2,8 +2,10 @@ const express = require("express");
 const router = express.Router();
 const userQueries = require("../db/queries.users.js");
 const wikiQueries = require("../db/queries.wikis.js");
+const User = require("../../src/db/models").User;
 const passport = require("passport");
 const sgMail = require('@sendgrid/mail');
+const stripe = require('stripe')('sk_test_iFasGfPrv4hKmyC0yxVDRS6V00FcpXjwqx');
 
 module.exports = {
 
@@ -48,6 +50,57 @@ signUp(req, res, next){
     });
   },
 
+//render account page with user plan options
+  upgradeForm(req, res, next){
+    res.render("users/upgrade");
+  },
+
+//upgrade user account to Premium
+upgradeCharge(req, res, next){
+    let amount = 1500;
+
+    stripe.customers.create({
+      email: req.body.email,
+      card: req.body.id
+    })
+    .then(customer =>
+      stripe.charges.create({
+        amount,
+        description: "Sample Charge",
+        currency: "usd",
+        customer: customer.id
+      }))
+    .then(charge => res.send(charge))
+    .catch(err => {
+      console.log("Error:", err);
+      res.status(500).send({error: "Purchase Failed"});
+    });
+  },
+
+  upgradeUser(req, res, next){
+
+    userQueries.upgradeUser(req.params.id, (err, user) => {
+      console.log(err);
+      console.log(req.params.id);
+      if(err || wiki == null){
+        req.flash("error", err);
+        res.redirect("/");
+      } else {
+        res.redirect("/");
+      }
+    });
+  },
+
+  //render page to downgrade user account
+    downgradeForm(req, res, next){
+      res.render("users/downgrade");
+    },
+
+//change user role from 2 to 0
+  downgradeUser(req, res, next){
+    console.log('changed user role from 2 to 0');
+  },
+
   signInForm(req, res, next){
     res.render("users/sign_in");
   },
@@ -64,26 +117,6 @@ signUp(req, res, next){
   })
 },
 
-  /*signIn(req, res, next){
-    passport.authenticate("local", function(err, user, info){
-      console.log(err);
-      if(err){
-        return next(err);
-      }
-      if(!req.user) {
-        req.flash("notice", "Sign in failed. Please try again.");
-        return res.redirect('/users/sign_in');
-        }
-        req.logIn(user, function(err) {
-          if(err) {
-            return next(err);
-          }
-          req.flash("notice", "You've successfully signed in!");
-          return res.redirect('/');
-        });
-      })(req, res, next);
-    },
-*/
 signOut(req, res, next){
   req.logout();
   req.flash("notice", "You've successfully signed out!");
