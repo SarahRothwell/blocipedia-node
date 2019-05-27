@@ -9,7 +9,7 @@
     <% include ../static/partials/navbar.ejs %>
 
     <main class="container">
-
+      <% include ../static/partials/messages.ejs %>
       <h1>Downgrade Account</h1>
 
       <p>Press the button below to downgrade from your premium account</p>
@@ -32,15 +32,15 @@
       console.log('downgrade button was clicked');
       fetch('/users/downgradeUser', {
         method:"POST",
-      //  headers: {"Content-Type": "application/json"},
-      //  body: JSON.stringify(token)
       })
       .then(function(response){
+        /*
         if(response.ok){
           console.log('downgradeUser click was recorded');
-          res.redirect('/')
+        //  res.redirect('/')
         }
         throw new Error ('click downgradeUser request failed.');
+        */
       })
       .catch(function(err) {
         console.log(err);

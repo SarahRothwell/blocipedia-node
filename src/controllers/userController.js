@@ -77,12 +77,13 @@ upgradeCharge(req, res, next){
     });
   },
 
+//change user role from 0 to 2
   upgradeUser(req, res, next){
 
-    userQueries.upgradeUser(req.params.id, (err, user) => {
+    userQueries.upgradeUser(req.user.id, (err, user) => {
       console.log(err);
       console.log(req.params.id);
-      if(err || wiki == null){
+      if(err || user == null){
         req.flash("error", err);
         res.redirect("/");
       } else {
@@ -90,15 +91,28 @@ upgradeCharge(req, res, next){
       }
     });
   },
+//render upgrade success page once user purchases a premium account
+/*
+paymentSuccess(req, res, next){
+  res.render("users/paymentSuccess");
+},
+*/
 
-  //render page to downgrade user account
-    downgradeForm(req, res, next){
-      res.render("users/downgrade");
-    },
+//render page to downgrade user account
+  downgradeForm(req, res, next){
+    res.render("users/downgrade");
+  },
 
 //change user role from 2 to 0
   downgradeUser(req, res, next){
-    console.log('changed user role from 2 to 0');
+    userQueries.downgradeUser(req.user.id, (err, user) => {
+      if(err || user == null){
+        req.flash("error", err);
+        res.redirect("/");
+      } else {
+        res.redirect("/");
+      }
+    });
   },
 
   signInForm(req, res, next){

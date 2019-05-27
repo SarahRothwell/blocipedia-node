@@ -12,7 +12,9 @@ router.get("/users/sign_out", userController.signOut);
 router.get("/users/upgrade", userController.upgradeForm);
 router.post("/users/upgradeCharge", userController.upgradeCharge);
 router.post("/users/upgradeUser", userController.upgradeUser);
+//router.get("/users/paymentSuccess", userController.paymentSuccess);
 router.get("/users/downgrade", userController.downgradeForm);
 router.post("/users/downgradeUser", userController.downgradeUser);
+
 
 module.exports = router;
