@@ -79,10 +79,11 @@ upgradeCharge(req, res, next){
 
 //change user role from 0 to 2
   upgradeUser(req, res, next){
-
+    //console.log("usercontroller upgrade user req output...........")
+    //console.log(req.user);
     userQueries.upgradeUser(req.user.id, (err, user) => {
-      console.log(err);
-      console.log(req.params.id);
+      //console.log(err);
+      //console.log(req.user.id);
       if(err || user == null){
         req.flash("error", err);
         res.redirect("/");

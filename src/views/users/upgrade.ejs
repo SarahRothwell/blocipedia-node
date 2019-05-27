@@ -9,7 +9,7 @@
     <% include ../static/partials/navbar.ejs %>
 
     <main class="container">
-      <% include ../static/partials/messages.ejs %>
+
       <h1>Upgrade to Premium</h1>
 
       <p>Upgrade your account to create private wikis!</p>
@@ -42,32 +42,28 @@
       });
     });
 
-  function handleToken(token) {
-    fetch("/users/upgradeCharge", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(token)
-    })
-    .then(output => {
-      //console.log(output);
-      if (output.status === "succeeded")
-      //  document.getElementById("shop").innerHTML = "<p>Purchase complete!</p>";
-      //  document.getElementById("buttonCheckout").href = "../wikis";
-      //  document.getElementById("buttonCheckout").value = "Go to wiki";
-        fetch('upgradeUser', {
-          method:"POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify(token)
-        })
-        .then(function(response) {
-        
-        })
-        .catch(err => {
-          console.log(err);
-        });
-
-    })
-  }
+    function handleToken(token) {
+      fetch("/users/upgradeCharge", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(token)
+      })
+      .then(output => {
+        console.log(output.status);
+        if (output.status === "succeeded")
+          document.getElementById("shop").innerHTML = "<p>Purchase complete!</p>";
+           fetch('upgradeUser', {
+            method:"POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(token)
+          })
+          .then(function(response) {
+           })
+          .catch(err => {
+            console.log(err);
+          });
+       })
+    }
 
 
   </script>

@@ -30,17 +30,11 @@
   console.log(button);
     button.addEventListener("click", function(ev) {
       console.log('downgrade button was clicked');
-      fetch('/users/downgradeUser', {
+      fetch('downgradeUser', {
         method:"POST",
       })
       .then(function(response){
-        /*
-        if(response.ok){
-          console.log('downgradeUser click was recorded');
-        //  res.redirect('/')
-        }
-        throw new Error ('click downgradeUser request failed.');
-        */
+
       })
       .catch(function(err) {
         console.log(err);

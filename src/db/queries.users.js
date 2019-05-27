@@ -33,12 +33,12 @@ module.exports = {
 
 //upgrade user role from 0 to 2
   upgradeUser(id, callback){
-    console.log('id from upgradeuser query.........');
-    console.log(id);
+    //console.log('id from upgradeuser query.........');
+  //  console.log(id);
     return User.findById(id)
     .then((user) => {
-    console.log("user infor after user.findById(id)...........");
-    console.log(user);
+  //  console.log("user infor after user.findById(id)...........");
+  //  console.log(user);
       if(!user){
         return callback("user not found");
       }
@@ -47,13 +47,11 @@ module.exports = {
         {where: {id: id}}
       )
       .then((res) => {
-    console.log("response to user upgrade....")
-      console.log(res);
-        callback(err);
+      //  callback(err);
       })
       .catch((err) => {
-    console.log("catch err to user upgrade....")
-       console.log(err);
+    //console.log("catch err to user upgrade....")
+      // console.log(err);
         callback(err);
       });
     });
