@@ -66,6 +66,25 @@ module.exports = {
          callback(err);
        });
      });
-   }
+   },
 
+/*
+  privatePublicWiki(req, callback){
+    return Wiki.findAll({
+      where: {
+        wiki.userId: req.user.id,
+        private: true
+      }
+    })
+    .then((updateState) => {
+      updateState.forEach((wiki) => {
+        wiki.updateAttributes({ private: false });
+      });
+    })
+    .catch((err) => {
+      callback(err);
+    });
+
+  }
+*/
 }

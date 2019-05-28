@@ -10,15 +10,15 @@ module.exports = class ApplicationPolicy {
   }
 
   _isStandard() {
-    return this.user && this.user.role === 0;
+    return this.user && this.user.role == 0;
   }
 
   _isAdmin() {
-    return this.user && this.user.role === 1;
+    return this.user && this.user.role == 1;
   }
 
   _isPremium() {
-    return this.user && this.user.role === 2;
+    return this.user && this.user.role == 2;
   }
 
   new() {

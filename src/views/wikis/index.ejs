@@ -9,20 +9,39 @@
 
     <main class="container">
       <% include ../static/partials/messages.ejs %>
-        <h1>Public Wikis</h1>
-        <% if(currentUser) { %>
-          <a href = "/wikis/new" class="btn bth-success">New Wiki</a>
-        <% } %>
+        <div>
+          <h1>Wikis</h1>
+          <% if(currentUser) { %>
+            <a href = "/wikis/new" class="btn bth-success">Create a new Wiki</a>
+          <% } %>
+        </div>
+        <div>
+          <h4>Public Wikis</h4>
+          <ul class="list-group">
+            <% wikis.forEach((wiki) => { %>
+              <% if(wiki.private === false) { %>
+              <li class="list-group-item">
+                <a href = "/wikis/<%= wiki.id %>"> <%= wiki.title %></a>
+              </li>
+              <% } %>
+            <% }) %>
+          </ul>
+      </div>
+      <div>
+        <h4>Private Wikis</h4>
         <ul class="list-group">
           <% wikis.forEach((wiki) => { %>
+            <% if((wiki.private === true) && (currentUser.id === wiki.userId)) { %>
             <li class="list-group-item">
               <a href = "/wikis/<%= wiki.id %>"> <%= wiki.title %></a>
             </li>
+            <% } %>
           <% }) %>
         </ul>
+    </div>
+
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
 
   </body>
-</html>
