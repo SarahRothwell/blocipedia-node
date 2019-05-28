@@ -79,25 +79,10 @@ upgradeCharge(req, res, next){
 
 //change user role from 0 to 2
   upgradeUser(req, res, next){
-    //console.log("usercontroller upgrade user req output...........")
-    //console.log(req.user);
-    userQueries.upgradeUser(req.user.id, (err, user) => {
-      //console.log(err);
-      //console.log(req.user.id);
-      if(err || user == null){
-        req.flash("error", err);
-        res.redirect("/");
-      } else {
-        res.redirect("/");
-      }
-    });
+    userQueries.upgradeUser(req.user.id);
+    req.flash("notice", "Congrats! You are a premium user!");
+    res.redirect("/");
   },
-//render upgrade success page once user purchases a premium account
-/*
-paymentSuccess(req, res, next){
-  res.render("users/paymentSuccess");
-},
-*/
 
 //render page to downgrade user account
   downgradeForm(req, res, next){
@@ -106,14 +91,10 @@ paymentSuccess(req, res, next){
 
 //change user role from 2 to 0
   downgradeUser(req, res, next){
-    userQueries.downgradeUser(req.user.id, (err, user) => {
-      if(err || user == null){
-        req.flash("error", err);
-        res.redirect("/");
-      } else {
-        res.redirect("/");
-      }
-    });
+    userQueries.downgradeUser(req.user.id);
+    wikiQueries.privatePublicWiki(req.user.id);
+    req.flash("notice", "You are no longer a premium user!");
+    res.redirect("/");
   },
 
   signInForm(req, res, next){

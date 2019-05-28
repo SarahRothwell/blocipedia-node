@@ -15,7 +15,7 @@
       <p>Upgrade your account to create private wikis!</p>
 
       <div id="shop">
-        <button id="buttonCheckout">Purchase Premium Account</button>
+        <button id="buttonCheckout" class="btn btn-primary">Purchase Premium Account</button>
       </div>
 
 
@@ -43,7 +43,7 @@
     });
 
     function handleToken(token) {
-      fetch("/users/upgradeCharge", {
+      fetch("/users/<%=currentUser.id%>/upgradeUser", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(token)

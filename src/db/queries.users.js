@@ -33,8 +33,8 @@ module.exports = {
 
 //upgrade user role from 0 to 2
   upgradeUser(id, callback){
-    //console.log('id from upgradeuser query.........');
-  //  console.log(id);
+    console.log('id from upgradeuser query.........');
+    console.log(id);
     return User.findById(id)
     .then((user) => {
   //  console.log("user infor after user.findById(id)...........");
@@ -69,9 +69,8 @@ module.exports = {
         {where: {id: id}}
       )
       .then((res) => {
-      //  console.log("response to user downgrade....")
-      //  console.log(res);
-        callback(err);
+
+      //  callback(err);
       })
       .catch((err) => {
         callback(err);

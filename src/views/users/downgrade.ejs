@@ -10,40 +10,19 @@
 
     <main class="container">
       <% include ../static/partials/messages.ejs %>
-      <h1>Downgrade Account</h1>
+      <h1>Downgrade membership</h1>
 
-      <p>Press the button below to downgrade from your premium account</p>
-
-      <div id="shop">
-        <button id="buttonDowngrade">Downgrade Account</button>
+      <p>Press the button below to downgrade your premium membership</p>
+      <p>Please note that private wikis will become public if you choose to end your membership</p>
+      <div>
+        <form action="/users/<%=currentUser.id%>/downgradeUser" method="POST">
+  				<button type="submit" class="btn btn-primary">Downgrade your account</button>
+  			</form>
       </div>
-
 
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
 
   </body>
-  <script>
-
-  const button = document.getElementById("buttonDowngrade");
-  console.log(button);
-
-  button.addEventListener("click", function(ev) {
-    console.log('downgrade button was clicked');
-    fetch('downgradeUser', {
-      method:"POST",
-    })
-    .then((res) => {
-      fetch('privatePublicWiki', {
-        method: "POST",
-      })
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  });
-
-  </script>
-
 </html>

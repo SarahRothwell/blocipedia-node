@@ -12,7 +12,7 @@
         <div>
           <h1>Wikis</h1>
           <% if(currentUser) { %>
-            <a href = "/wikis/new" class="btn bth-success">Create a new Wiki</a>
+            <a href = "/wikis/new" class="btn btn-success">Create a new Wiki</a>
           <% } %>
         </div>
         <div>
@@ -29,6 +29,9 @@
       </div>
       <div>
         <h4>Private Wikis</h4>
+        <% if(currentUser.role == 0) { %>
+          <p><em>Upgrade to create private wikis!</em></p>
+        <% } %>
         <ul class="list-group">
           <% wikis.forEach((wiki) => { %>
             <% if((wiki.private === true) && (currentUser.id === wiki.userId)) { %>

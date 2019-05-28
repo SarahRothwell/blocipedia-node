@@ -68,11 +68,10 @@ module.exports = {
      });
    },
 
-/*
-  privatePublicWiki(req, callback){
+  privatePublicWiki(userId, callback){
     return Wiki.findAll({
       where: {
-        wiki.userId: req.user.id,
+        userId: userId,
         private: true
       }
     })
@@ -86,5 +85,5 @@ module.exports = {
     });
 
   }
-*/
+
 }
