@@ -3,6 +3,7 @@ const router = express.Router();
 const wikiQueries = require("../db/queries.wikis.js");
 const userQueries = require("../db/queries.users.js");
 const Authorizer = require("../policies/wiki");
+const markdown = require( "markdown" ).markdown;
 
  module.exports = {
 
@@ -43,6 +44,7 @@ const Authorizer = require("../policies/wiki");
        if(err || wiki == null){
          res.redirect(404, "/");
        } else {
+         wiki.body = markdown.toHTML(wiki.body);
          res.render("wikis/show", {wiki});
        }
      });
