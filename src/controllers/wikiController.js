@@ -48,7 +48,7 @@ const markdown = require( "markdown" ).markdown;
          res.render("wikis/show", {wiki});
        }
      });
- },
+   },
 
    destroy(req, res, next){
      wikiQueries.deleteWiki(req, (err, wiki) => {
@@ -78,6 +78,43 @@ const markdown = require( "markdown" ).markdown;
          res.redirect(303, "/wikis");
        }
      });
-   }
+   },
 
+   //show all collaborators for a wiki on wiki/collaborator.ejs
+   findCollaborators(req, res, next){
+     //console.log("find collborators req.params.id in wikiController........")
+    // console.log(req.params.id);
+      wikiQueries.findCollaborators(req, (err, collaborators, wiki, users) => {
+        console.log(err)
+        if(err || wiki == null){
+          res.redirect(404, "/");
+        } else {
+           res.render(`wikis/${req.params.id}/collborators`, {wiki, collborators, users});
+       }
+      });
+    },
+
+//add a collaborator to a wiki
+   addCollaborator(req, res, next){
+      wikiQueries.addCollaborator(req, (err, collaborator) => {
+        if(err){
+          req.flash("notice", "Collaborator was not added");
+          res.redirect(500, "/")
+        } else {
+          req.flash("notice", "Congrats! You have added a new collaborator");
+          res.redirect("/");
+        }
+      });
+   },
+
+//delete a collaborator from a wiki
+   removeCollaborator(req, res, next){
+      wikiQueries.removeCollaborator((err, collaborator) => {
+        if(err){
+          res.redirect(500, `/wikis/${req.params.id}`)
+        } else {
+          res.redirect(`wikis/${req.params.id}`);
+        }
+      });
+   },
  }

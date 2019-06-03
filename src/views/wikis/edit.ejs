@@ -13,7 +13,7 @@
 
       <h1>Edit Wiki</h1>
 
-          <form action="/wikis/<%=wiki.id %>/update" method="post">
+        <form action="/wikis/<%=wiki.id %>/update" method="post">
         <div class="form-group">
           <label for="title">Wiki title</label>
           <input value="<%= wiki.title %>" type="text" class="form-control" name="title" aria-describedby="titleHelp" placeholder="Enter Title">
@@ -22,9 +22,8 @@
           <label for="body">Wiki description</label>
           <textarea rows="4" class="form-control" name="body" placeholder="Enter Description"><%- wiki.body %></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary">Update Wiki</button>
       </form>
-
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>

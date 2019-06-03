@@ -69,8 +69,6 @@ module.exports = {
         {where: {id: id}}
       )
       .then((res) => {
-
-      //  callback(err);
       })
       .catch((err) => {
         callback(err);

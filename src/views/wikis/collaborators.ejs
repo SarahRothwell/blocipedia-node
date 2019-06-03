@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+
+      <% include ../static/partials/messages.ejs %>
+      <div>
+        <h4>Wiki collaborators</h4>
+        <ul class="list-group">
+          <% collaborators.forEach((collaborator) => { %>
+            <li class = "list-group-item">wiki.collaborator.user.name</li>
+          <% }) >
+        </ul>
+      </div>
+
+
+        <form action="/wikis/<%=wiki.id %>/addCollaborator" method="post">
+            <input type="text" placeholder="Enter user email..." name="email">
+            <button type="submit"><i class="fa fa-search"></i>Add Collaborator</button>
+        </form>
+
+    </main>
+
+    <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+</html>

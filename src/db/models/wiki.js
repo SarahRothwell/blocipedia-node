@@ -13,12 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
       allowNull:false,
-  /*    set: function(value) {
-        if (value === 'true') value = true;
-        if (value === 'false') value = false;
-        this.setDataValue('private', value);
-      }
-      */
     },
     userId: {
       type: DataTypes.INTEGER,
@@ -31,6 +25,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "userId",
       onDelete: "CASCADE"
     });
+
+    Wiki.hasMany(models.Collaborator, {
+      foreignKey: "wikiId",
+      as: "collaborators"
+    });
+
   };
 
   return Wiki;
