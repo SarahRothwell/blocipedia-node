@@ -21,6 +21,7 @@
           <% }) %>
         </ul>
       </div>
+        <% if((currentUser.id == wiki.userId) || currentUser.role == 1) { %>
         <div>
           <form action="/wikis/<%=wiki.id %>/addCollaborator" method="post">
               <input type="text" placeholder="Enter user email..." name="email">
@@ -33,6 +34,7 @@
               <button type="submit"><i class="fa fa-search"></i>Remove Collaborator</button>
           </form>
         </div>
+        <% } %>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>

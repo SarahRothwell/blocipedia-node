@@ -46,6 +46,24 @@ module.exports = {
   },
 
   getWiki(id, callback){
+    return Wiki.findById(id, {
+    include: [
+      {model: Collaborator, as: "collaborators", include: [
+        {model: User }
+      ]}
+    ]
+    })
+    .then((wiki) => {
+      console.log(wiki);
+      callback(null, wiki);
+    })
+    .catch((err) => {
+      callback(err);
+    })
+  },
+
+/*
+  getWiki(id, callback){
     return Wiki.findById(id)
     .then((wiki) => {
       callback(null, wiki);
@@ -54,7 +72,7 @@ module.exports = {
       callback(err);
     })
   },
-
+*/
   deleteWiki(req, callback){
     return Wiki.findById(req.params.id)
     .then((wiki) => {
