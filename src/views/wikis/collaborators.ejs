@@ -10,14 +10,7 @@
     <main class="container">
 
       <% include ../static/partials/messages.ejs %>
-      <div>
-        <h4>Wiki collaborators</h4>
-        <ul class="list-group">
-          <% collaborators.forEach((collaborator) => { %>
-            <li class = "list-group-item">wiki.collaborator.user.name</li>
-          <% }) >
-        </ul>
-      </div>
+
 
 
         <form action="/wikis/<%=wiki.id %>/addCollaborator" method="post">

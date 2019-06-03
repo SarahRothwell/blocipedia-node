@@ -127,8 +127,8 @@ module.exports = {
   },
 
   findCollaborators(req, callback){
-    console.log("FIND COLLABORATORS...............")
-    console.log(req.params.id);
+    //console.log("FIND COLLABORATORS...............")
+  //  console.log(req.params.id);
     return Wiki.findById(req.params.id, {
     include: [
       {model: Collaborator, as: "collaborators", include: [
@@ -137,7 +137,8 @@ module.exports = {
     ]
     })
     .then((wiki) => {
-    //  console.log(wiki);
+  //  console.log("findCollaborators() output in queries.wiki file...............")
+  //  console.log(wiki);
       callback(null, wiki);
     })
     .catch((err) => {
