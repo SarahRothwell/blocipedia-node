@@ -82,16 +82,17 @@ const markdown = require( "markdown" ).markdown;
 
    //show all collaborators for a wiki on wiki/collaborator.ejs
    findCollaborators(req, res, next){
-     //console.log("find collborators req.params.id in wikiController........")
-    // console.log(req.params.id);
-      wikiQueries.findCollaborators(req, (err, collaborators, wiki, users) => {
-        console.log("this is the wiki:" +req.params.id);
+      wikiQueries.findCollaborators(req.params.id, (err, wiki) => {
+        console.log("this is the wiki id:" +req.params.id);
+        console.log("wiki" +wiki)
         if(err || req.params.id == null){
           res.redirect(404, "/");
         } else {
-          res.render(`/wikis/${req.params.id}/collaborators`, {wiki, collaborators, users});
+          res.render("wikis/collaborators", {wiki});
+        //  res.render(`/wikis/collaborators`, {wiki, collaborators, users});
        }
       });
+
     },
 
 //add a collaborator to a wiki
