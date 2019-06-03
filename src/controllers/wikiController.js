@@ -83,8 +83,8 @@ const markdown = require( "markdown" ).markdown;
    //show all collaborators for a wiki on wiki/collaborator.ejs
    findCollaborators(req, res, next){
       wikiQueries.findCollaborators(req.params.id, (err, wiki) => {
-        console.log("this is the wiki id:" +req.params.id);
-        console.log("wiki" +wiki)
+        //console.log("this is the wiki id:" +req.params.id);
+      //  console.log("wiki" +wiki)
         if(err || req.params.id == null){
           res.redirect(404, "/");
         } else {
@@ -109,13 +109,15 @@ const markdown = require( "markdown" ).markdown;
    },
 
 //delete a collaborator from a wiki
-   removeCollaborator(req, res, next){
-      wikiQueries.removeCollaborator((err, collaborator) => {
-        if(err){
-          res.redirect(500, `/wikis/${req.params.id}`)
-        } else {
-          res.redirect(`wikis/${req.params.id}`);
-        }
-      });
-   },
+  removeCollaborator(req, res, next){
+     wikiQueries.removeCollaborator(req, (err, collaborator) => {
+       if(err){
+         req.flash("notice", "Collaborator was not deleted");
+         res.redirect(500, "/")
+       } else {
+         req.flash("notice", "Congrats!  Collaborator was removed.");
+         res.redirect("/");
+       }
+     });
+  }
  }

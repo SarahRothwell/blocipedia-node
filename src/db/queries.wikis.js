@@ -4,16 +4,36 @@ const Collaborator = require("./models").Collaborator;
 
 module.exports = {
 
+/*
   getAllWikis(callback){
     return Wiki.all()
 
     .then((wikis) => {
+      console.log(wikis);
       callback(null, wikis);
     })
     .catch((err) => {
       callback(err);
     })
   },
+*/
+
+  getAllWikis(callback){
+    return Wiki.findAll({
+    include: [{
+      model: Collaborator, as: "collaborators", include: [
+        {model: User }
+      ]}
+    ]
+    })
+    .then((wikis) => {
+    //  console.log(wikis)
+      callback(null, wikis);
+    })
+    .catch((err) => {
+      callback(err);
+    })
+    },
 
   addWiki(newWiki, callback){
     return Wiki.create(newWiki)
@@ -110,25 +130,27 @@ module.exports = {
     });
   },
 
-  removeCollaborator(req, callback){
+  removeCollaborator(req, callback) {
     User.findOne({
       where: {
         email: req.body.email
       }
-    }).then((user) => {
-
-      Collaborator.destory({
-        wikiId: req.params.id,
-        userId: user.id
+    }).then(user => {
+      Collaborator.destroy({
+        where: {
+          wikiId: req.params.id,
+          userId: user.id
+        }
+      }).then((res) => {
+        callback(null);
       })
-    }).catch((err) =>{
-      callback(err, null);
-    });
+    })
+    .catch((err) => {
+      callback(err);
+    })
   },
 
   findCollaborators(wikiId, callback){
-    //console.log("FIND COLLABORATORS...............")
-  //  console.log(req.params.id);
     return Wiki.findById(wikiId, {
     include: [
       {model: Collaborator, as: "collaborators", include: [
@@ -137,8 +159,6 @@ module.exports = {
     ]
     })
     .then((wiki) => {
-    console.log("findCollaborators() output in queries.wiki file...............")
-    console.log(wiki);
       callback(null, wiki);
     })
     .catch((err) => {

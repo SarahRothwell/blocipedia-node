@@ -11,13 +11,28 @@
 
       <% include ../static/partials/messages.ejs %>
 
-
-
-        <form action="/wikis/<%=wiki.id %>/addCollaborator" method="post">
-            <input type="text" placeholder="Enter user email..." name="email">
-            <button type="submit"><i class="fa fa-search"></i>Add Collaborator</button>
-        </form>
-
+      <div>
+        <h4>Wiki Collaborators</h4>
+        <ul class="list-group">
+          <% wiki.collaborators.forEach((collaborator) => { %>
+            <li class="list-group-item">
+              <%= collaborator.User.email %>
+            </li>
+          <% }) %>
+        </ul>
+      </div>
+        <div>
+          <form action="/wikis/<%=wiki.id %>/addCollaborator" method="post">
+              <input type="text" placeholder="Enter user email..." name="email">
+              <button type="submit"><i class="fa fa-search"></i>Add Collaborator</button>
+          </form>
+        </div>
+        <div>
+          <form action="/wikis/<%=wiki.id %>/removeCollaborator" method="post">
+              <input type="text" placeholder="Enter user email..." name="email">
+              <button type="submit"><i class="fa fa-search"></i>Remove Collaborator</button>
+          </form>
+        </div>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
