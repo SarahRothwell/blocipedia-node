@@ -98,9 +98,11 @@ const markdown = require( "markdown" ).markdown;
 //add a collaborator to a wiki
    addCollaborator(req, res, next){
       wikiQueries.addCollaborator(req, (err, collaborator) => {
+        console.log("err........")
+        console.log(err);
         if(err){
           req.flash("notice", "Collaborator was not added");
-          res.redirect(500, "/")
+          res.redirect("/")
         } else {
           req.flash("notice", "Congrats! You have added a new collaborator");
           res.redirect("/");

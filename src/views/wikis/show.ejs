@@ -12,21 +12,26 @@
       <h1><%= wiki.title %></h1>
       <p><%- wiki.body %></p>
 
-      <% if(currentUser) { %>
       <div>
+          <% if((currentUser.id == wiki.userId) || (currentUser.role == 1)) { %>
+            <a href = "<%= wiki.id %>/edit" class="btn btn-success">Edit Wiki</a>
+            <a href = "<%= wiki.id %>/collaborators" class="btn btn-warning">Collaborators</a>
+            <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          <% } else { %>
             <% wiki.collaborators.forEach((collaborator) => { %>
-              <% if((collaborator.User.id == currentUser.id) || (currentUser.id === wiki.userId) || (currentUser.role == 1)) { %>
-                <a href = "<%= wiki.id %>/edit" class="btn btn-success">Edit Wiki</a>
-                <a href = "<%= wiki.id %>/collaborators" class="btn btn-warning">Collaborators</a>
-                <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
-                  <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-              <% } %>
+                <% if(currentUser.id == collaborator.User.id) { %>
+                  <a href = "<%= wiki.id %>/edit" class="btn btn-success">Edit Wiki</a>
+                  <a href = "<%= wiki.id %>/collaborators" class="btn btn-warning">Collaborators</a>
+                  <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                  </form>
+                <% } %>
             <% }) %>
+        <% } %>
     </div>
-    <% } %>
-
-    </main>
+  </main>
 
     <% include ../static/partials/baseScripts.ejs %>
 

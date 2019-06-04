@@ -4,20 +4,6 @@ const Collaborator = require("./models").Collaborator;
 
 module.exports = {
 
-/*
-  getAllWikis(callback){
-    return Wiki.all()
-
-    .then((wikis) => {
-      console.log(wikis);
-      callback(null, wikis);
-    })
-    .catch((err) => {
-      callback(err);
-    })
-  },
-*/
-
   getAllWikis(callback){
     return Wiki.findAll({
     include: [{
@@ -62,17 +48,6 @@ module.exports = {
     })
   },
 
-/*
-  getWiki(id, callback){
-    return Wiki.findById(id)
-    .then((wiki) => {
-      callback(null, wiki);
-    })
-    .catch((err) => {
-      callback(err);
-    })
-  },
-*/
   deleteWiki(req, callback){
     return Wiki.findById(req.params.id)
     .then((wiki) => {
@@ -126,14 +101,50 @@ module.exports = {
   },
 
   addCollaborator(req, callback){
+    User.findOne({
+      where: {
+        email: req.body.email
+      }
+    }).then((user) => {
+
+      Collaborator.findOne({
+        where: {
+          wikiId: req.params.id,
+          userId: user.id
+        }
+      }).then((res) => {
+        console.log("res......")
+        console.log(res);
+        if (res !== null){
+          throw new Error("user already exists")
+          //return callback(err, "User is already a collaborator on this wiki");
+        } else {
+
+          Collaborator.create({
+            wikiId: req.params.id,
+            userId: user.id
+          }).then((collaborator) => {
+              return callback(null, collaborator);
+          })
+        };
+      }).catch((err) => {
+        callback(err, null);
+      });
+
+    }).catch((err) => {
+      callback(err, null);
+    });
+  },
+
+
+/*
+  addCollaborator(req, callback){
   //  console.log(req.body.email);
     User.findOne({
       where: {
         email: req.body.email
       }
     }).then((user) => {
-      //console.log(user.id);
-    //  console.log(req.params.id);
 
       Collaborator.create({
         wikiId: req.params.id,
@@ -147,7 +158,7 @@ module.exports = {
       callback(err, null);
     });
   },
-
+*/
   removeCollaborator(req, callback) {
     User.findOne({
       where: {
