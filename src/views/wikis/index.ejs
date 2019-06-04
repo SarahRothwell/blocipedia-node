@@ -27,35 +27,37 @@
             <% }) %>
           </ul>
       </div>
+      <%if(currentUser) { %>
+        <div>
+          <h4>My Private Wikis</h4>
+          <% if(currentUser.role == 0) { %>
+            <p><em>Upgrade to create private wikis!</em></p>
+          <% } %>
+          <ul class="list-group">
+            <% wikis.forEach((wiki) => { %>
+              <% if((wiki.private === true) && (currentUser.id === wiki.userId)) { %>
+              <li class="list-group-item">
+                <a href = "/wikis/<%= wiki.id %>"> <%= wiki.title %></a>
+              </li>
+              <% } %>
+            <% }) %>
+          </ul>
+      </div>
       <div>
-        <h4>My Private Wikis</h4>
-        <% if(currentUser.role == 0) { %>
-          <p><em>Upgrade to create private wikis!</em></p>
-        <% } %>
+        <h4>Private wikis I am collaborating on</h4>
         <ul class="list-group">
           <% wikis.forEach((wiki) => { %>
-            <% if((wiki.private === true) && (currentUser.id === wiki.userId)) { %>
-            <li class="list-group-item">
-              <a href = "/wikis/<%= wiki.id %>"> <%= wiki.title %></a>
-            </li>
-            <% } %>
+                <% wiki.collaborators.forEach((collaborator) => { %>
+                  <% if(collaborator.User.id == currentUser.id) { %>
+                  <li class="list-group-item">
+                    <a href = "/wikis/<%= wiki.id %>"> <%= wiki.title%></a>
+                  </li>
+                  <% } %>
+                <% }) %>
           <% }) %>
         </ul>
     </div>
-    <div>
-      <h4>Private wikis I am collaborating on</h4>
-      <ul class="list-group">
-        <% wikis.forEach((wiki) => { %>
-              <% wiki.collaborators.forEach((collaborator) => { %>
-                <% if(collaborator.User.id == currentUser.id) { %>
-                <li class="list-group-item">
-                  <a href = "/wikis/<%= wiki.id %>"> <%= wiki.title%></a>
-                </li>
-                <% } %>
-              <% }) %>
-        <% }) %>
-      </ul>
-  </div>
+  <% } %>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
